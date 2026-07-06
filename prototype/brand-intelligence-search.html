@@ -1,0 +1,441 @@
+<title>Brand Intelligence Search — Beauty Market Intelligence Terminal</title>
+<style>
+  :root {
+    --bg:#EAECEF; --panel:#FFFFFF; --panel-2:#F5F6F8; --line:#E3E6EA;
+    --ink:#191B1F; --ink-2:#5A606A; --ink-3:#8B919B;
+    --accent:#B4405F; --accent-soft:rgba(180,64,95,.12);
+    --pos:#0E8A67; --neg:#C0562F; --pos-soft:rgba(14,138,103,.13); --neg-soft:rgba(192,86,47,.13);
+    --grid:rgba(20,22,26,.07); --shadow:0 1px 2px rgba(20,22,26,.06),0 8px 24px rgba(20,22,26,.05);
+    --font-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --font-mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#0E0E12; --panel:#17181E; --panel-2:#1E1F27; --line:#2A2C35;
+    --ink:#EAEBEF; --ink-2:#9BA1AC; --ink-3:#6B707B;
+    --accent:#DA6E8A; --accent-soft:rgba(218,110,138,.16);
+    --pos:#2FA98C; --neg:#DB7540; --pos-soft:rgba(47,169,140,.15); --neg-soft:rgba(219,117,64,.15);
+    --grid:rgba(255,255,255,.07); --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  }}
+  :root[data-theme="light"]{
+    --bg:#EAECEF; --panel:#FFFFFF; --panel-2:#F5F6F8; --line:#E3E6EA;
+    --ink:#191B1F; --ink-2:#5A606A; --ink-3:#8B919B;
+    --accent:#B4405F; --accent-soft:rgba(180,64,95,.12);
+    --pos:#0E8A67; --neg:#C0562F; --pos-soft:rgba(14,138,103,.13); --neg-soft:rgba(192,86,47,.13);
+    --grid:rgba(20,22,26,.07); --shadow:0 1px 2px rgba(20,22,26,.06),0 8px 24px rgba(20,22,26,.05);
+  }
+  :root[data-theme="dark"]{
+    --bg:#0E0E12; --panel:#17181E; --panel-2:#1E1F27; --line:#2A2C35;
+    --ink:#EAEBEF; --ink-2:#9BA1AC; --ink-3:#6B707B;
+    --accent:#DA6E8A; --accent-soft:rgba(218,110,138,.16);
+    --pos:#2FA98C; --neg:#DB7540; --pos-soft:rgba(47,169,140,.15); --neg-soft:rgba(219,117,64,.15);
+    --grid:rgba(255,255,255,.07); --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);
+    font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+  .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+  .eyebrow{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-3)}
+  h1,h2,h3{margin:0;font-weight:650;letter-spacing:-.01em}
+  button{font-family:inherit;cursor:pointer}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+  /* ── top bar ───────────────────────────────────────── */
+  header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--panel) 88%,transparent);
+    backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;gap:18px;padding:11px 20px;max-width:1360px;margin:0 auto}
+  .brandmark{display:flex;align-items:center;gap:9px;flex-shrink:0}
+  .glyph{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 55%,#7a2ea0));
+    display:grid;place-items:center;color:#fff;font-size:12px}
+  .wordmark{font-weight:680;letter-spacing:-.02em;font-size:14.5px}
+  .wordmark span{color:var(--ink-3);font-weight:500}
+  nav{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}
+  nav::-webkit-scrollbar{display:none}
+  .tab{border:0;background:transparent;color:var(--ink-2);padding:7px 11px;border-radius:7px;
+    font-size:12.5px;white-space:nowrap;display:flex;align-items:center;gap:7px;font-weight:530}
+  .tab:hover{background:var(--panel-2);color:var(--ink)}
+  .tab[aria-current="true"]{background:var(--accent-soft);color:var(--accent);font-weight:620}
+  .tab .soon{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.1em;color:var(--ink-3);
+    border:1px solid var(--line);border-radius:4px;padding:1px 4px}
+  .search{position:relative;flex-shrink:0}
+  .search input{width:230px;background:var(--panel-2);border:1px solid var(--line);color:var(--ink);
+    border-radius:8px;padding:8px 11px 8px 30px;font-size:13px;font-family:var(--font-mono)}
+  .search input::placeholder{color:var(--ink-3)}
+  .search .ico{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:13px}
+  .menu{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;box-shadow:var(--shadow);overflow:hidden;display:none;z-index:30}
+  .menu.open{display:block}
+  .menu button{display:flex;justify-content:space-between;width:100%;border:0;background:transparent;
+    color:var(--ink);padding:9px 12px;text-align:left;font-size:13px}
+  .menu button:hover,.menu button.hi{background:var(--accent-soft)}
+  .menu .cat{color:var(--ink-3);font-size:11px;font-family:var(--font-mono)}
+  .tgl{flex-shrink:0;border:1px solid var(--line);background:var(--panel-2);color:var(--ink-2);
+    width:34px;height:34px;border-radius:8px;display:grid;place-items:center;font-size:15px}
+  .tgl:hover{color:var(--ink)}
+
+  /* ── identity strip ────────────────────────────────── */
+  .wrap{max-width:1360px;margin:0 auto;padding:20px}
+  .idstrip{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .idstrip .name{font-size:27px;letter-spacing:-.025em}
+  .idstrip .sub{color:var(--ink-2);margin-top:3px;font-size:13px}
+  .chips{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .chip{font-family:var(--font-mono);font-size:11px;color:var(--ink-2);background:var(--panel);
+    border:1px solid var(--line);border-radius:20px;padding:4px 10px;display:flex;gap:6px;align-items:center}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--pos)}
+  .seg{display:flex;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:2px}
+  .seg button{border:0;background:transparent;color:var(--ink-2);padding:5px 10px;border-radius:6px;font-size:11.5px;font-family:var(--font-mono)}
+  .seg button.on{background:var(--panel);color:var(--ink);box-shadow:var(--shadow)}
+
+  /* ── layout ────────────────────────────────────────── */
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) 348px;gap:16px}
+  @media(max-width:980px){.grid{grid-template-columns:1fr}}
+  .col{display:flex;flex-direction:column;gap:16px;min-width:0}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .panel > .head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .panel h2{font-size:13.5px}
+  .panel .hint{font-size:11px;color:var(--ink-3)}
+
+  /* KPI */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:620px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 14px;position:relative;overflow:hidden}
+  .kpi .lab{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+  .kpi .val{font-family:var(--font-mono);font-size:23px;font-weight:600;letter-spacing:-.02em;line-height:1}
+  .kpi .val small{font-size:13px;color:var(--ink-3);font-weight:500}
+  .kpi .meta{margin-top:7px;font-size:11.5px;color:var(--ink-2);display:flex;align-items:center;gap:7px}
+  .delta{font-family:var(--font-mono);font-weight:600}
+  .delta.up{color:var(--pos)} .delta.down{color:var(--neg)}
+  .spark{position:absolute;right:12px;bottom:11px;opacity:.9}
+
+  /* ranked bars */
+  .lh{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:560px){.lh{grid-template-columns:1fr}}
+  .lh h3{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);margin-bottom:11px;display:flex;gap:7px;align-items:center}
+  .barrow{width:100%;border:0;background:transparent;padding:7px 6px;border-radius:8px;display:block;text-align:left;margin-bottom:2px}
+  .barrow:hover{background:var(--panel-2)}
+  .barrow.sel{background:var(--accent-soft)}
+  .barrow .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;gap:8px}
+  .barrow .cl{font-size:12.5px;color:var(--ink);font-weight:520}
+  .barrow .cv{font-family:var(--font-mono);font-size:11.5px;color:var(--ink-2)}
+  .track{height:7px;border-radius:4px;background:var(--panel-2);overflow:hidden}
+  .fill{height:100%;border-radius:4px}
+  .fill.pos{background:var(--pos)} .fill.neg{background:var(--neg)}
+
+  /* charts */
+  .charts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:720px){.charts{grid-template-columns:1fr}}
+  .ct{position:relative}
+  .ct .cap{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .ct .cap .now{font-family:var(--font-mono);font-size:12px;color:var(--ink)}
+  svg{display:block;width:100%;height:auto;overflow:visible}
+  .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-family:var(--font-mono);
+    font-size:11px;padding:5px 8px;border-radius:6px;white-space:nowrap;opacity:0;transition:opacity .1s;transform:translate(-50%,-130%);z-index:5}
+
+  /* fingerprint */
+  .fp .row{display:grid;grid-template-columns:130px 1fr;gap:10px;align-items:center;padding:5px 0}
+  .fp .fl{font-size:12px;color:var(--ink);display:flex;gap:6px;align-items:center;justify-content:flex-end;text-align:right}
+  .kind{width:7px;height:7px;border-radius:2px;flex-shrink:0}
+  .kind.benefit{background:var(--pos)} .kind.complaint{background:var(--neg)}
+  .fpbar{position:relative;height:22px}
+  .fpbar .center{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--ink-3);opacity:.5}
+  .fpbar .b{position:absolute;top:3px;height:16px;border-radius:4px;display:flex;align-items:center}
+  .fpbar .b.over{left:50%;background:var(--accent-soft);border:1px solid var(--accent)}
+  .fpbar .b.under{right:50%;background:var(--panel-2);border:1px solid var(--line)}
+  .fpbar .b span{font-family:var(--font-mono);font-size:10.5px;color:var(--ink);padding:0 6px;position:absolute}
+  .fpbar .b.over span{left:100%;color:var(--accent)}
+  .fpbar .b.under span{right:100%;color:var(--ink-2)}
+
+  /* evidence drawer */
+  .drawer{position:sticky;top:76px}
+  .ev .head .cur{font-family:var(--font-mono);font-size:11px;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:3px 8px}
+  .verb{border-top:1px solid var(--line);padding:12px 0}
+  .verb:first-of-type{border-top:0}
+  .verb .meta{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+  .stars{font-family:var(--font-mono);font-size:12px;letter-spacing:1px;color:var(--accent)}
+  .src{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px}
+  .date{font-family:var(--font-mono);font-size:11px;color:var(--ink-3)}
+  .sent{margin-left:auto;font-family:var(--font-mono);font-size:11px;font-weight:600}
+  .sent.p{color:var(--pos)} .sent.n{color:var(--neg)}
+  .verb .txt{font-size:13px;color:var(--ink-2);line-height:1.5}
+  .verb .txt mark{background:var(--accent-soft);color:var(--ink);border-radius:3px;padding:0 2px}
+  .empty{color:var(--ink-3);font-size:12.5px;padding:20px 0;text-align:center}
+
+  footer{max-width:1360px;margin:8px auto 30px;padding:0 20px;color:var(--ink-3);
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.03em;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  footer .d{width:4px;height:4px;border-radius:50%;background:var(--ink-3)}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);
+    font-size:12.5px;padding:9px 15px;border-radius:9px;box-shadow:var(--shadow);opacity:0;transition:.2s;pointer-events:none;z-index:50}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header>
+  <div class="bar">
+    <div class="brandmark">
+      <div class="glyph">◈</div>
+      <div class="wordmark">Beauty Intelligence <span>/ Terminal</span></div>
+    </div>
+    <nav id="nav"></nav>
+    <div class="search">
+      <span class="ico">⌕</span>
+      <input id="q" placeholder="Search brand…" autocomplete="off" aria-label="Search brand">
+      <div class="menu" id="menu"></div>
+    </div>
+    <button class="tgl" id="tgl" aria-label="Toggle theme">◐</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="idstrip">
+    <div>
+      <div class="eyebrow">Brand Intelligence</div>
+      <h1 class="name" id="bname">Lumeau</h1>
+      <div class="sub" id="bsub"></div>
+    </div>
+    <div class="chips">
+      <span class="chip"><span class="dot"></span>Frozen snapshot</span>
+      <div class="seg" id="win">
+        <button data-w="6">6M</button><button data-w="12" class="on">12M</button><button data-w="24">24M</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid" style="margin-top:16px">
+    <div class="col">
+      <section class="panel">
+        <div class="head"><h2>What they love · What they flag</h2><span class="hint">click a concept → evidence</span></div>
+        <div class="lh">
+          <div><h3><span class="kind benefit"></span>Loved</h3><div id="loved"></div></div>
+          <div><h3><span class="kind complaint"></span>Flagged</h3><div id="hated"></div></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="head"><h2>Trend</h2><span class="hint">review volume &amp; net sentiment · monthly</span></div>
+        <div class="charts">
+          <div class="ct"><div class="cap"><span class="eyebrow">Review volume</span><span class="now" id="volnow"></span></div><div id="volc"></div><div class="tip" id="voltip"></div></div>
+          <div class="ct"><div class="cap"><span class="eyebrow">Net sentiment</span><span class="now" id="sennow"></span></div><div id="senc"></div><div class="tip" id="sentip"></div></div>
+        </div>
+      </section>
+
+      <section class="panel fp">
+        <div class="head"><h2>Competitive fingerprint</h2><span class="hint">share-of-mention vs category · 1.0× = category avg</span></div>
+        <div id="fp"></div>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="panel ev drawer">
+        <div class="head"><h2>Evidence</h2><span class="cur" id="evcur">—</span></div>
+        <div id="verbs"></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<footer id="foot"></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const DATA = {
+  header:{brandName:"Lumeau",categoryName:"Facial Cleansers",reviewsAll:41988,reviewsWindow:18204,reviewsWindowPrior:16197,avgRating:4.31,netSentiment:0.42,sov:0.148,sovRank:2,brandsInCategory:37},
+  loved:[
+    {conceptId:"c_gentle",label:"Gentle formula",share:0.191,sentiment:0.71},
+    {conceptId:"c_hydration",label:"Hydration",share:0.164,sentiment:0.63},
+    {conceptId:"c_nonstrip",label:"Non-stripping",share:0.121,sentiment:0.68},
+    {conceptId:"c_fragfree",label:"Fragrance-free",share:0.098,sentiment:0.59},
+    {conceptId:"c_foam",label:"Foaming texture",share:0.071,sentiment:0.44}],
+  hated:[
+    {conceptId:"c_pilling",label:"Pilling",share:0.084,sentiment:-0.52},
+    {conceptId:"c_breakouts",label:"Breakouts",share:0.067,sentiment:-0.61},
+    {conceptId:"c_tightness",label:"Dryness / tightness",share:0.058,sentiment:-0.47},
+    {conceptId:"c_leak",label:"Packaging leaks",share:0.041,sentiment:-0.55},
+    {conceptId:"c_price",label:"Price / value",share:0.036,sentiment:-0.38}],
+  trend:[["2025-01",812,0.31],["2025-02",864,0.33],["2025-03",903,0.30],["2025-04",988,0.28],["2025-05",1074,0.34],["2025-06",1156,0.37],["2025-07",1233,0.39],["2025-08",1198,0.33],["2025-09",1342,0.40],["2025-10",1451,0.43],["2025-11",1587,0.44],["2025-12",1699,0.41],["2026-01",1622,0.45],["2026-02",1704,0.42]],
+  fingerprint:[
+    {label:"Gentle formula",kind:"benefit",r:1.89},{label:"Pilling",kind:"complaint",r:1.62},
+    {label:"Fragrance-free",kind:"benefit",r:1.58},{label:"Hydration",kind:"benefit",r:1.29},
+    {label:"Foaming texture",kind:"benefit",r:1.04},{label:"Breakouts",kind:"complaint",r:0.83},
+    {label:"Dryness / tightness",kind:"complaint",r:0.62},{label:"Price / value",kind:"complaint",r:0.51}],
+  verbatims:{
+    c_pilling:[
+      {rating:2,source:"Sephora",sentiment:-0.6,text:"Love how gentle it is but it pills so badly under my sunscreen. Have to rinse twice and even then it rolls up.",snip:"it pills so badly under my sunscreen",date:"2026-01-22"},
+      {rating:3,source:"Amazon",sentiment:-0.45,text:"Good cleanser overall, no fragrance which I need. Only issue is the pilling when I layer it with a hydrating serum.",snip:"the pilling when I layer it",date:"2026-01-09"},
+      {rating:2,source:"Ulta",sentiment:-0.55,text:"Balls up on my skin every single time. Disappointing because otherwise it feels nice and non-stripping.",snip:"Balls up on my skin every single time",date:"2025-12-30"},
+      {rating:3,source:"Reddit",sentiment:-0.4,text:"FYI if you get pilling, use less product and let it absorb. Still happens to me on damp skin though.",snip:"if you get pilling, use less product",date:"2025-12-11"}],
+    c_gentle:[
+      {rating:5,source:"Sephora",sentiment:0.8,text:"The gentlest cleanser I have ever used. My rosacea has not flared once since switching.",snip:"The gentlest cleanser I have ever used",date:"2026-02-01"},
+      {rating:5,source:"Amazon",sentiment:0.72,text:"So gentle it never leaves my skin tight or squeaky. Perfect for a compromised barrier.",snip:"never leaves my skin tight or squeaky",date:"2026-01-18"}],
+    c_breakouts:[
+      {rating:2,source:"Amazon",sentiment:-0.65,text:"Broke me out along my jaw after two weeks. Might be the last ingredient in the list, not sure.",snip:"Broke me out along my jaw after two weeks",date:"2026-01-14"}]},
+  brands:[["Lumeau","Facial Cleansers"],["Aurelle","Serums"],["Veil & Bloom","Moisturizers"],["Ko Beauty","Sunscreen"],["Nova Skin","Facial Cleansers"],["Sable & Co","Facial Cleansers"]]
+};
+const MODULES=[["Brand","Brand Intelligence",true],["Pulse","Market Pulse"],["Shift","Consumer Shift"],["Radar","Complaint Radar"],["Category","Category Intelligence"]];
+const $=(s,r=document)=>r.querySelector(s), el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const pct=v=>(v*100).toFixed(1)+"%", signed=v=>(v>=0?"+":"")+v.toFixed(2);
+
+/* nav */
+MODULES.forEach(([k,full,active])=>{
+  const b=el("button","tab");b.setAttribute("role","tab");
+  b.innerHTML=`${k}${active?"":' <span class="soon">soon</span>'}`;
+  if(active)b.setAttribute("aria-current","true");
+  b.title=full;
+  b.onclick=()=>active?0:toast(`${full} ships next — see MVP_PLAN`);
+  $("#nav").append(b);
+});
+
+/* identity + kpis */
+function renderHead(){
+  const h=DATA.header;
+  $("#bname").textContent=h.brandName;
+  $("#bsub").textContent=`${h.categoryName} · ${h.reviewsAll.toLocaleString()} reviews all-time`;
+  const dPct=(h.reviewsWindow/h.reviewsWindowPrior-1)*100;
+  const spark=sparkline(DATA.trend.map(t=>t[1]));
+  $("#kpis").innerHTML="";
+  [
+    {lab:"Reviews · TTM",val:h.reviewsWindow.toLocaleString(),
+     meta:`<span class="delta ${dPct>=0?'up':'down'}">${dPct>=0?'▲':'▼'} ${Math.abs(dPct).toFixed(1)}%</span> vs prior yr`,spark},
+    {lab:"Avg rating",val:h.avgRating.toFixed(2),sfx:"/5",meta:stars(h.avgRating)},
+    {lab:"Net sentiment",val:signed(h.netSentiment),meta:`scale −1 … +1`,accent:h.netSentiment>=0?'var(--pos)':'var(--neg)'},
+    {lab:"Share of voice",val:pct(h.sov),meta:`rank <b class="mono">#${h.sovRank}</b> of ${h.brandsInCategory}`}
+  ].forEach(k=>{
+    const c=el("div","kpi");
+    c.innerHTML=`<div class="lab eyebrow">${k.lab}</div>
+      <div class="val" ${k.accent?`style="color:${k.accent}"`:""}>${k.val}${k.sfx?`<small>${k.sfx}</small>`:""}</div>
+      <div class="meta">${k.meta}</div>${k.spark?`<div class="spark">${k.spark}</div>`:""}`;
+    $("#kpis").append(c);
+  });
+}
+function stars(v){const f=Math.round(v);return `<span class="stars">${"★".repeat(f)}${"☆".repeat(5-f)}</span>`}
+function sparkline(vals){const w=64,h=22,mn=Math.min(...vals),mx=Math.max(...vals);
+  const pts=vals.map((v,i)=>[i/(vals.length-1)*w,h-((v-mn)/(mx-mn||1))*(h-4)-2]);
+  const d=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><path d="${d}" fill="none" stroke="var(--accent)" stroke-width="1.5" vector-effect="non-scaling-stroke"/><circle cx="${pts.at(-1)[0].toFixed(1)}" cy="${pts.at(-1)[1].toFixed(1)}" r="2.2" fill="var(--accent)"/></svg>`}
+
+/* ranked bars */
+function renderBars(){
+  const mk=(list,cls,host)=>{host.innerHTML="";const mx=Math.max(...list.map(d=>d.share));
+    list.forEach(d=>{
+      const b=el("button","barrow");b.dataset.cid=d.conceptId;
+      b.innerHTML=`<div class="top"><span class="cl">${d.label}</span><span class="cv">${pct(d.share)} · ${signed(d.sentiment)}</span></div>
+        <div class="track"><div class="fill ${cls}" style="width:${(d.share/mx*100).toFixed(1)}%"></div></div>`;
+      b.onclick=()=>select(d.conceptId,d.label);
+      host.append(b);
+    });};
+  mk(DATA.loved,"pos",$("#loved"));mk(DATA.hated,"neg",$("#hated"));
+}
+
+/* time-series charts */
+function tsChart(host,tip,series,{fmt,zero=false,color="var(--accent)",fill=true}){
+  const W=340,H=132,pad={l:6,r:6,t:10,b:18};
+  const xs=series.map((_,i)=>pad.l+i/(series.length-1)*(W-pad.l-pad.r));
+  let mn=Math.min(...series),mx=Math.max(...series);
+  if(zero){mn=Math.min(mn,0);mx=Math.max(mx,0)} else {mn=mn-(mx-mn)*0.12;}
+  const Y=v=>pad.t+(1-(v-mn)/(mx-mn||1))*(H-pad.t-pad.b);
+  const pts=series.map((v,i)=>[xs[i],Y(v)]);
+  const line=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");
+  const grid=[0,.5,1].map(g=>{const y=pad.t+g*(H-pad.t-pad.b);return `<line x1="${pad.l}" x2="${W-pad.r}" y1="${y}" y2="${y}" stroke="var(--grid)" stroke-width="1"/>`}).join("");
+  const zeroLn=zero?`<line x1="${pad.l}" x2="${W-pad.r}" y1="${Y(0).toFixed(1)}" y2="${Y(0).toFixed(1)}" stroke="var(--ink-3)" stroke-width="1" stroke-dasharray="2 3" opacity=".6"/>`:"";
+  const area=fill?`<path d="${line} L ${xs.at(-1).toFixed(1)} ${(H-pad.b).toFixed(1)} L ${pad.l} ${(H-pad.b).toFixed(1)} Z" fill="${color}" opacity=".13"/>`:"";
+  host.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img">
+    ${grid}${zeroLn}${area}
+    <path d="${line}" fill="none" stroke="${color}" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+    <circle cx="${pts.at(-1)[0].toFixed(1)}" cy="${pts.at(-1)[1].toFixed(1)}" r="3" fill="${color}"/>
+    <line id="cross" x1="0" x2="0" y1="${pad.t}" y2="${H-pad.b}" stroke="var(--ink-3)" stroke-width="1" opacity="0"/>
+    <circle id="cdot" r="3.4" fill="${color}" stroke="var(--panel)" stroke-width="1.5" opacity="0"/>
+    <rect id="hit" x="0" y="0" width="${W}" height="${H}" fill="transparent"/></svg>`;
+  const svg=host.firstChild,cross=svg.querySelector("#cross"),cdot=svg.querySelector("#cdot"),hit=svg.querySelector("#hit");
+  hit.addEventListener("pointermove",e=>{
+    const r=svg.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*W;
+    let i=Math.round((x-pad.l)/((W-pad.l-pad.r))*(series.length-1));i=Math.max(0,Math.min(series.length-1,i));
+    cross.setAttribute("x1",xs[i]);cross.setAttribute("x2",xs[i]);cross.setAttribute("opacity",".5");
+    cdot.setAttribute("cx",pts[i][0]);cdot.setAttribute("cy",pts[i][1]);cdot.setAttribute("opacity","1");
+    tip.style.opacity="1";tip.style.left=(pts[i][0]/W*r.width)+"px";tip.style.top=(pts[i][1]/H*r.height)+"px";
+    tip.textContent=DATA.trend[i][0]+"  ·  "+fmt(series[i]);
+  });
+  hit.addEventListener("pointerleave",()=>{cross.setAttribute("opacity","0");cdot.setAttribute("opacity","0");tip.style.opacity="0"});
+}
+function renderCharts(){
+  const vol=DATA.trend.map(t=>t[1]),sen=DATA.trend.map(t=>t[2]);
+  $("#volnow").textContent=vol.at(-1).toLocaleString();
+  $("#sennow").textContent=signed(sen.at(-1));
+  tsChart($("#volc"),$("#voltip"),vol,{fmt:v=>v.toLocaleString()+" reviews",color:"var(--accent)",fill:true});
+  tsChart($("#senc"),$("#sentip"),sen,{fmt:v=>"net "+signed(v),color:"var(--pos)",fill:false,zero:true});
+}
+
+/* fingerprint */
+function renderFp(){
+  const host=$("#fp");host.innerHTML="";
+  const maxDev=Math.max(...DATA.fingerprint.map(d=>Math.abs(Math.log2(d.r))));
+  DATA.fingerprint.forEach(d=>{
+    const lg=Math.log2(d.r),w=Math.abs(lg)/maxDev*48; // % of half-width
+    const over=lg>=0;
+    const row=el("div","row");
+    row.innerHTML=`<div class="fl">${d.label}<span class="kind ${d.kind}"></span></div>
+      <div class="fpbar"><div class="center"></div>
+        <div class="b ${over?'over':'under'}" style="width:${w.toFixed(1)}%"><span>${d.r.toFixed(2)}×</span></div></div>`;
+    host.append(row);
+  });
+}
+
+/* evidence */
+let selected=null;
+function select(cid,label){
+  selected=cid;
+  document.querySelectorAll(".barrow").forEach(b=>b.classList.toggle("sel",b.dataset.cid===cid));
+  $("#evcur").textContent=label;
+  const host=$("#verbs");host.innerHTML="";
+  const list=DATA.verbatims[cid];
+  if(!list||!list.length){host.append(Object.assign(el("div","empty"),{textContent:`No sample reviews wired for “${label}” in this prototype. Live build pulls from concept_mentions → v_reviews_unified.`}));return}
+  list.forEach(v=>{
+    const w=el("div","verb");
+    const meta=el("div","meta");
+    meta.innerHTML=`<span class="stars">${"★".repeat(v.rating)}${"☆".repeat(5-v.rating)}</span>
+      <span class="src">${v.source}</span><span class="date">${v.date}</span>
+      <span class="sent ${v.sentiment>=0?'p':'n'}">${signed(v.sentiment)}</span>`;
+    const txt=el("div","txt");
+    const idx=v.text.indexOf(v.snip);
+    if(idx>=0){txt.append(v.text.slice(0,idx));const m=el("mark",null,v.snip);txt.append(m,v.text.slice(idx+v.snip.length))}
+    else txt.textContent=v.text;
+    w.append(meta,txt);host.append(w);
+  });
+}
+
+/* search */
+const menu=$("#menu"),q=$("#q");
+function renderMenu(f=""){
+  menu.innerHTML="";const m=DATA.brands.filter(b=>b[0].toLowerCase().includes(f.toLowerCase()));
+  m.forEach(b=>{const btn=el("button");btn.innerHTML=`<span>${b[0]}</span><span class="cat">${b[1]}</span>`;
+    btn.onmousedown=e=>{e.preventDefault();pick(b[0])};menu.append(btn)});
+  menu.classList.toggle("open",m.length>0);
+}
+function pick(name){
+  q.value="";menu.classList.remove("open");
+  if(name==="Lumeau"){toast("Loaded Lumeau");return}
+  toast(`${name}: full frozen brief not wired in this prototype — Lumeau is the worked example`);
+}
+q.addEventListener("focus",()=>renderMenu(q.value));
+q.addEventListener("input",()=>renderMenu(q.value));
+q.addEventListener("blur",()=>setTimeout(()=>menu.classList.remove("open"),120));
+
+/* window seg (prototype: visual only) */
+$("#win").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  $("#win").querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on");
+  toast(`Window → ${b.dataset.w}M (recomputes SoM/velocity in live build)`)});
+
+/* theme */
+$("#tgl").onclick=()=>{const cur=document.documentElement.getAttribute("data-theme")
+  ||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  const next=cur==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",next);
+  renderCharts()};
+
+/* toast */
+let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2600)}
+
+$("#foot").innerHTML=`<span>FROZEN SNAPSHOT</span><span class="d"></span><span>509,506 reviews</span><span class="d"></span><span>655,166 concept mentions</span><span class="d"></span><span>53 concepts · 211 terms</span><span class="d"></span><span>source: concept_timeseries + concept_mentions + v_reviews_unified</span>`;
+
+renderHead();renderBars();renderCharts();renderFp();select("c_pilling","Pilling");
+addEventListener("resize",()=>{clearTimeout(window._rz);window._rz=setTimeout(renderCharts,150)});
+</script>

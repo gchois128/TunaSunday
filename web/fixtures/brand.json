@@ -1,0 +1,79 @@
+{
+  "header": {
+    "brandId": "brand_lumeau",
+    "brandName": "Lumeau",
+    "categoryId": "cat_cleansers",
+    "categoryName": "Facial Cleansers",
+    "reviewsAll": 41988,
+    "reviewsWindow": 18204,
+    "reviewsWindowPrior": 16197,
+    "avgRating": 4.31,
+    "netSentiment": 0.42,
+    "sov": 0.148,
+    "sovRank": 2,
+    "brandsInCategory": 37
+  },
+  "loved": [
+    { "conceptId": "c_gentle", "label": "Gentle formula", "kind": "benefit", "mentions": 5121, "share": 0.191, "sentiment": 0.71 },
+    { "conceptId": "c_hydration", "label": "Hydration", "kind": "benefit", "mentions": 4398, "share": 0.164, "sentiment": 0.63 },
+    { "conceptId": "c_nonstrip", "label": "Non-stripping", "kind": "benefit", "mentions": 3244, "share": 0.121, "sentiment": 0.68 },
+    { "conceptId": "c_fragfree", "label": "Fragrance-free", "kind": "benefit", "mentions": 2627, "share": 0.098, "sentiment": 0.59 },
+    { "conceptId": "c_foam", "label": "Foaming texture", "kind": "benefit", "mentions": 1903, "share": 0.071, "sentiment": 0.44 }
+  ],
+  "hated": [
+    { "conceptId": "c_pilling", "label": "Pilling", "kind": "complaint", "mentions": 2251, "share": 0.084, "sentiment": -0.52 },
+    { "conceptId": "c_breakouts", "label": "Breakouts", "kind": "complaint", "mentions": 1795, "share": 0.067, "sentiment": -0.61 },
+    { "conceptId": "c_tightness", "label": "Dryness / tightness", "kind": "complaint", "mentions": 1554, "share": 0.058, "sentiment": -0.47 },
+    { "conceptId": "c_leak", "label": "Packaging leaks", "kind": "complaint", "mentions": 1098, "share": 0.041, "sentiment": -0.55 },
+    { "conceptId": "c_price", "label": "Price / value", "kind": "complaint", "mentions": 964, "share": 0.036, "sentiment": -0.38 }
+  ],
+  "trend": [
+    { "period": "2025-01", "reviews": 812, "avgRating": 4.18, "netSentiment": 0.31, "sov": 0.121 },
+    { "period": "2025-02", "reviews": 864, "avgRating": 4.2, "netSentiment": 0.33, "sov": 0.124 },
+    { "period": "2025-03", "reviews": 903, "avgRating": 4.22, "netSentiment": 0.3, "sov": 0.126 },
+    { "period": "2025-04", "reviews": 988, "avgRating": 4.19, "netSentiment": 0.28, "sov": 0.129 },
+    { "period": "2025-05", "reviews": 1074, "avgRating": 4.24, "netSentiment": 0.34, "sov": 0.133 },
+    { "period": "2025-06", "reviews": 1156, "avgRating": 4.27, "netSentiment": 0.37, "sov": 0.136 },
+    { "period": "2025-07", "reviews": 1233, "avgRating": 4.29, "netSentiment": 0.39, "sov": 0.139 },
+    { "period": "2025-08", "reviews": 1198, "avgRating": 4.25, "netSentiment": 0.33, "sov": 0.141 },
+    { "period": "2025-09", "reviews": 1342, "avgRating": 4.3, "netSentiment": 0.4, "sov": 0.143 },
+    { "period": "2025-10", "reviews": 1451, "avgRating": 4.33, "netSentiment": 0.43, "sov": 0.145 },
+    { "period": "2025-11", "reviews": 1587, "avgRating": 4.34, "netSentiment": 0.44, "sov": 0.147 },
+    { "period": "2025-12", "reviews": 1699, "avgRating": 4.32, "netSentiment": 0.41, "sov": 0.148 },
+    { "period": "2026-01", "reviews": 1622, "avgRating": 4.35, "netSentiment": 0.45, "sov": 0.149 },
+    { "period": "2026-02", "reviews": 1704, "avgRating": 4.33, "netSentiment": 0.42, "sov": 0.148 }
+  ],
+  "fingerprint": [
+    { "conceptId": "c_gentle", "label": "Gentle formula", "kind": "benefit", "brandSom": 0.191, "catSom": 0.101, "indexRatio": 1.89 },
+    { "conceptId": "c_fragfree", "label": "Fragrance-free", "kind": "benefit", "brandSom": 0.098, "catSom": 0.062, "indexRatio": 1.58 },
+    { "conceptId": "c_hydration", "label": "Hydration", "kind": "benefit", "brandSom": 0.164, "catSom": 0.127, "indexRatio": 1.29 },
+    { "conceptId": "c_foam", "label": "Foaming texture", "kind": "benefit", "brandSom": 0.071, "catSom": 0.068, "indexRatio": 1.04 },
+    { "conceptId": "c_pilling", "label": "Pilling", "kind": "complaint", "brandSom": 0.084, "catSom": 0.052, "indexRatio": 1.62 },
+    { "conceptId": "c_breakouts", "label": "Breakouts", "kind": "complaint", "brandSom": 0.067, "catSom": 0.081, "indexRatio": 0.83 },
+    { "conceptId": "c_tightness", "label": "Dryness / tightness", "kind": "complaint", "brandSom": 0.058, "catSom": 0.094, "indexRatio": 0.62 },
+    { "conceptId": "c_price", "label": "Price / value", "kind": "complaint", "brandSom": 0.036, "catSom": 0.071, "indexRatio": 0.51 }
+  ],
+  "verbatims": {
+    "c_pilling": [
+      { "reviewId": "r_88213", "reviewDate": "2026-01-22", "rating": 2, "source": "Sephora", "sentiment": -0.6, "text": "Love how gentle it is but it pills so badly under my sunscreen. Have to rinse twice and even then it rolls up.", "snippet": "it pills so badly under my sunscreen" },
+      { "reviewId": "r_87991", "reviewDate": "2026-01-09", "rating": 3, "source": "Amazon", "sentiment": -0.45, "text": "Good cleanser overall, no fragrance which I need. Only issue is the pilling when I layer it with a hydrating serum.", "snippet": "the pilling when I layer it" },
+      { "reviewId": "r_86420", "reviewDate": "2025-12-30", "rating": 2, "source": "Ulta", "sentiment": -0.55, "text": "Balls up on my skin every single time. Disappointing because otherwise it feels nice and non-stripping.", "snippet": "Balls up on my skin every single time" },
+      { "reviewId": "r_85110", "reviewDate": "2025-12-11", "rating": 3, "source": "Reddit", "sentiment": -0.4, "text": "FYI if you get pilling, use less product and let it absorb. Still happens to me on damp skin though.", "snippet": "if you get pilling, use less product" }
+    ],
+    "c_gentle": [
+      { "reviewId": "r_88540", "reviewDate": "2026-02-01", "rating": 5, "source": "Sephora", "sentiment": 0.8, "text": "The gentlest cleanser I have ever used. My rosacea has not flared once since switching.", "snippet": "The gentlest cleanser I have ever used" },
+      { "reviewId": "r_88101", "reviewDate": "2026-01-18", "rating": 5, "source": "Amazon", "sentiment": 0.72, "text": "So gentle it never leaves my skin tight or squeaky. Perfect for a compromised barrier.", "snippet": "never leaves my skin tight or squeaky" }
+    ],
+    "c_breakouts": [
+      { "reviewId": "r_87320", "reviewDate": "2026-01-14", "rating": 2, "source": "Amazon", "sentiment": -0.65, "text": "Broke me out along my jaw after two weeks. Might be the last ingredient in the list, not sure.", "snippet": "Broke me out along my jaw after two weeks" }
+    ]
+  },
+  "brands": [
+    { "brandId": "brand_lumeau", "brandName": "Lumeau", "categoryName": "Facial Cleansers" },
+    { "brandId": "brand_aurelle", "brandName": "Aurelle", "categoryName": "Serums" },
+    { "brandId": "brand_veilbloom", "brandName": "Veil & Bloom", "categoryName": "Moisturizers" },
+    { "brandId": "brand_kobeauty", "brandName": "Ko Beauty", "categoryName": "Sunscreen" },
+    { "brandId": "brand_novaskin", "brandName": "Nova Skin", "categoryName": "Facial Cleansers" },
+    { "brandId": "brand_sableco", "brandName": "Sable & Co", "categoryName": "Facial Cleansers" }
+  ]
+}
